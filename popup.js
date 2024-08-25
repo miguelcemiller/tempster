@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let isEditing = false;
   let currentEditingTemplateName = "";
 
-  // alert
+  // Close alert
   closeAlert.addEventListener("click", () => {
     closeAlert.parentElement.style.display = "none";
   });
 
-  // close all alerts function
+  // Function to close all alerts
   function closeAlerts() {
     document.querySelectorAll(".alert").forEach((alert) => {
       alert.style.display = "none";
@@ -37,14 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
     closeAlerts();
   });
 
-  // Function to adjust padding-right based on scrollbar presence
+  // Adjust padding-right based on scrollbar presence
   function adjustPadding() {
     const hasScrollbar = templatesList.scrollHeight > templatesList.clientHeight;
-    if (hasScrollbar) {
-      templatesList.style.paddingRight = "15px"; // Adjust the value as needed
-    } else {
-      templatesList.style.paddingRight = "0";
-    }
+    templatesList.style.paddingRight = hasScrollbar ? "15px" : "0";
   }
 
   // Load existing templates from storage
@@ -56,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   textareaTemplateText.addEventListener("input", () => {
-    closeAlerts();
     textareaTemplateText.style.height = "82px";
     textareaTemplateText.style.height = `${textareaTemplateText.scrollHeight}px`;
     toggleSaveButton();
@@ -76,14 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
     save.disabled = true; // Disable the save button
   });
 
-  // Function to enable or disable the save button based on inputs
+  // Toggle save button based on input fields
   function toggleSaveButton() {
-    closeAlerts();
-    if (inputTemplateName.value.trim() && textareaTemplateText.value.trim()) {
-      save.disabled = false;
-    } else {
-      save.disabled = true;
-    }
+    save.disabled = !(inputTemplateName.value.trim() && textareaTemplateText.value.trim());
   }
 
   // Function to add a template to the list
@@ -110,12 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
       textareaTemplateText.style.height = "82px";
       textareaTemplateText.style.height = `${textareaTemplateText.scrollHeight}px`;
       isEditing = true;
+      toggleSaveButton();
       currentEditingTemplateName = template.name;
-      back.style.display = "block"; // Show the back button when editing
+      back.style.display = "block";
     });
 
     templatesList.appendChild(templateItem);
-    adjustPadding(); // Adjust padding after adding new template
+    adjustPadding();
   }
 
   // Function to delete a template from storage
@@ -127,14 +118,14 @@ document.addEventListener("DOMContentLoaded", function () {
         // Reset editing state
         isEditing = false;
         currentEditingTemplateName = "";
-        back.style.display = "none"; // Hide the back button
+        back.style.display = "none";
 
-        toggleSaveButton(); // Re-evaluate the save button state
+        toggleSaveButton();
 
-        alertValue.textContent = `Template '${templateToDelete.name}' deleted!`;
-        alert.classList.remove("bad-alert");
-        alert.classList.add("good-alert");
-        closeAlert.style.fill = "#5c9e77";
+        alertValue.textContent = `template '${templateToDelete.name}' deleted!`;
+        alert.classList.remove("good-alert");
+        alert.classList.add("bad-alert");
+        closeAlert.style.fill = "#C93033";
         alert.style.display = "flex";
 
         inputTemplateName.value = "";
@@ -163,12 +154,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         isEditing = false;
         currentEditingTemplateName = "";
-        back.style.display = "none"; // Hide the back button after updating
-        alertValue.textContent = "template updated";
+        back.style.display = "none";
+        alertValue.textContent = "template updated!";
       } else {
         // Check for duplicate template names
         if (templates.some((template) => template.name.toLowerCase() === templateName.toLowerCase())) {
-          alertValue.textContent = "name already exists";
+          alertValue.textContent = "name already exists!";
           alert.classList.remove("good-alert");
           alert.classList.add("bad-alert");
           closeAlert.style.fill = "#C93033";
@@ -180,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const newTemplate = { name: templateName, content: templateText };
         templates.push(newTemplate);
         addTemplateToList(newTemplate);
-        alertValue.textContent = "template saved";
+        alertValue.textContent = "template saved!";
       }
 
       chrome.storage.sync.set({ templates: templates }, function () {
@@ -190,10 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleSaveButton();
         alert.classList.remove("bad-alert");
         alert.classList.add("good-alert");
-        closeAlert.style.fill = "#5c9e77";
+        closeAlert.style.fill = "#4b8965";
         alert.style.display = "flex";
-        templatesList.innerHTML = ""; // Clear list
-        templates.forEach((template) => addTemplateToList(template)); // Re-render list
+        templatesList.innerHTML = "";
+        templates.forEach((template) => addTemplateToList(template));
       });
     });
   });

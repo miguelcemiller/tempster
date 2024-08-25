@@ -25,7 +25,6 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId.startsWith("template-")) {
-    console.log("submenu clicked");
     chrome.storage.sync.get("templates", function (data) {
       const templates = data.templates || [];
       const index = parseInt(info.menuItemId.replace("template-", ""), 10);
