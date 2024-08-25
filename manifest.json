@@ -3,9 +3,9 @@
   "name": "V",
   "version": "1.0.0",
   "description": "Paste templates with a right-click.",
-  "permissions": ["contextMenus", "storage"],
+  "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
   "background": {
-    "service-worker": "background-js"
+    "service_worker": "background.js"
   },
 
   "action": {
@@ -16,6 +16,13 @@
       "128": "images/icon128.png"
     }
   },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
 
   "icons": {
     "16": "images/icon16.png",
