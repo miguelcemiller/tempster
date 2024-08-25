@@ -1,26 +1,39 @@
-// Inject content script when the extension is installed or updated
-chrome.runtime.onInstalled.addListener(() => {
-  // Create the main context menu item
-  chrome.contextMenus.create({
-    id: "v",
-    title: "V",
-    contexts: ["editable"],
-  });
+// Function to create context menu items based on templates
+function createContextMenu() {
+  // Remove all existing context menu items
+  chrome.contextMenus.removeAll(() => {
+    // Create the main context menu item
+    chrome.contextMenus.create({
+      id: "v",
+      title: "V",
+      contexts: ["editable"],
+    });
 
-  // Fetch templates and create submenu items
-  chrome.storage.sync.get("templates", function (data) {
-    const templates = data.templates || [];
+    // Fetch templates and create submenu items
+    chrome.storage.sync.get("templates", function (data) {
+      const templates = data.templates || [];
 
-    templates.forEach((template, index) => {
-      // Create a submenu item for each template
-      chrome.contextMenus.create({
-        id: `template-${index}`,
-        parentId: "v", // Set as a child of the main menu item
-        title: template.name,
-        contexts: ["editable"],
+      templates.forEach((template, index) => {
+        // Create a submenu item for each template
+        chrome.contextMenus.create({
+          id: `template-${index}`,
+          parentId: "v",
+          title: template.name,
+          contexts: ["editable"],
+        });
       });
     });
   });
+}
+
+// Inject content script when the extension is installed or updated
+chrome.runtime.onInstalled.addListener(createContextMenu);
+
+// Update context menu when the storage is updated
+chrome.storage.onChanged.addListener((changes) => {
+  if (changes.templates) {
+    createContextMenu();
+  }
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
