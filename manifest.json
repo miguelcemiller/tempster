@@ -3,7 +3,7 @@
   "name": "Tempster",
   "version": "1.0.0",
   "description": "Paste templates with a right-click.",
-  "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+  "permissions": ["contextMenus", "storage", "scripting"],
   "background": {
     "service_worker": "background.js"
   },
