@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tempster",
   "version": "1.0.0",
-  "description": "Paste templates with a right-click.",
+  "description": "Effortlessly manage and insert text templates with a simple right-click.",
   "permissions": ["contextMenus", "storage", "scripting"],
   "background": {
     "service_worker": "background.js"
