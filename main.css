@@ -27,11 +27,24 @@ body {
 /* header */
 .header {
   margin-bottom: 20px;
+  width: min-content;
+}
+
+.header-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
 }
 
 .header-link-icon {
   height: 24px;
   width: 24px;
+  margin-right: 6px;
+}
+
+.header-link-text-icon {
+  height: 20px;
+  padding-top: 4px;
 }
 
 .header-link-text {

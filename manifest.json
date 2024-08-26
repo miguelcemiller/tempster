@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "V",
+  "name": "Tempster",
   "version": "1.0.0",
   "description": "Paste templates with a right-click.",
   "permissions": ["contextMenus", "storage", "activeTab", "scripting"],

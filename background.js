@@ -4,8 +4,8 @@ function createContextMenu() {
   chrome.contextMenus.removeAll(() => {
     // Create the main context menu item
     chrome.contextMenus.create({
-      id: "v",
-      title: "V",
+      id: "tempster",
+      title: "Copy Template",
       contexts: ["editable"],
     });
 
@@ -17,7 +17,7 @@ function createContextMenu() {
         // Create a submenu item for each template
         chrome.contextMenus.create({
           id: `template-${index}`,
-          parentId: "v",
+          parentId: "tempster",
           title: template.name,
           contexts: ["editable"],
         });
